@@ -18,6 +18,7 @@
     "concurrently": "^5.3.0",
     "express": "^4.17.1",
     "node-fetch": "^2.6.1",
+    "node-sass": "^4.14.1",
     "universal-config": "^0.3.0",
     "unsplash-js": "^6.3.0"
   },
