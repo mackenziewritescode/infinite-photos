@@ -4,7 +4,7 @@ You can check it out [here](http://sunkenworld.com/infinite-photos/).
 
 This app was written as an exercise in two areas: on the back-end side to practice communicating with servers to fetch images using Node.js, Express.js and axios, and on the front-end using React hooks to create an infinite-scrolling component for the fetched images. Here's a little breakdown of the key components.
 
-Once we've set up a simple fetch request from the Unsplash servers, we create a useEffect method in the function `usePhotoSearch` that receives two pieces of state from the main `App` component: the `keyword` that the user searched for, and the `page` number, which is another parameter of the Unsplash API which defines a group of images related to the keyword. In `server.js`, we defined the length of the page to be 30 items. We use axios to make the GET request and return the data to an array, `photoArr`:
+Once we've set up a simple fetch request from the Unsplash servers, we create a `useEffect` method in the function `usePhotoSearch` that receives two pieces of state from the main `App` component: the `keyword` that the user searched for, and the `page` number, which is another parameter of the Unsplash API which defines a group of images related to the keyword. In `server.js`, we defined the length of the page to be 30 items. We use axios to make the GET request and return the data to an array saved in the local state, `photoArr`:
 
 ```
 useEffect(() => {
@@ -18,11 +18,12 @@ useEffect(() => {
     });
   }, [keyword, page]);
 ```
-With each request, `photoArr` is created by spreading the previous array and adding the new data to the end of it. The 'Set()' constructor is used to make sure that each item is unique.
 
-You can also see that with each request, a local piece of state is saved called `setHasMore`, which we use to see if there we are at the end of our results and nothing was returned.
+With each request, `photoArr` is set by spreading the previous array and adding the new data to the end of it. The 'Set()' constructor is used to make sure that each item in the array is unique.
 
-Next, in our main `App` component, we create a jsx component that has html components for each entry in our array: 
+You can also see that with each request, another piece of local state is saved called `hasMore`, which we use to see if there we are at the end of our results and nothing was returned. This knowledge is used in the `lastPhotoRef` hook, which we will see in a moment.
+
+Next, in our main `App` component, we create a jsx component that has html components for each entry in our array, which we will render to the user: 
 
 ```
 const photos = photoArr.map((photo, index) => {
@@ -35,7 +36,7 @@ const photos = photoArr.map((photo, index) => {
           </a>
         </div>
       );
-      // every photo except the last in the array
+    // every photo except the last in the array
     } else {
       return (
         <div className="thumb" key={photo.id}>
@@ -47,9 +48,11 @@ const photos = photoArr.map((photo, index) => {
     }
   });
 ```
-In the last entry of the array we pass a ref; we will be using this as a reference point in our pagination.
+
+In the last entry of the array we pass a `ref`; we will be using this as a reference point in our pagination.
 
 Finally, we have the infinite-scrolling component. Here we use JaveScript's `IntersectionObserver` to watch for the last item in the array. When that item is visible, our page counter increases and `usePhotoSeach` fetches new items from that page.
+
 ```
  const observer = useRef();
 
@@ -67,6 +70,7 @@ Finally, we have the infinite-scrolling component. Here we use JaveScript's `Int
     [loading, hasMore]
   );
 ```
+
 `useCallback` is used instead of `useEffect` here because it relies on reference equity and not state, so it will save us from unnecessary renders. It will only run if the values of `loading` or `hasMore` have changed.
 
 ***
