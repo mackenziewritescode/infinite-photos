@@ -3,7 +3,6 @@ import axios from "axios";
 
 export default function usePhotoSearch(keyword, page) {
   const [loading, setLoading] = useState(true);
-  // const [error, setError] = useState(false);
   const [photoArr, setPhotoArr] = useState([]);
   const [hasMore, setHasMore] = useState(false);
 

@@ -1,57 +1,16 @@
 import React, { useState, useRef, useCallback } from "react";
 import "./App.scss";
 import usePhotoSearch from "./usePhotoSearch";
-
-const text = (
-  <div id="text">
-    <div id="info-wrap">
-      <p>
-        This is a simple web app that uses the{" "}
-        <a href="https://unsplash.com/developers">Unsplash API</a> to create an
-        infinite-scrolling image search. It's written with Node.js and React.js
-        using hooks. The infinite-scrolling component is written from scratch
-        using React's useRef().
-      </p>
-      <p>
-        If you're interested, read about it on Github{" "}
-        <a href="https://github.com/mackenziewritescode/infinite-photos">
-          here
-        </a>{" "}
-        and check out the rest of my portfolio{" "}
-        <a href="http://www.sunkenworld.com/">here</a>.
-      </p>
-    </div>
-    <footer id="footer">
-      <p>
-        This site was made by{" "}
-        <a className="footer-link" href="http://www.sunkenworld.com/">
-          Mackenzie Charlton
-        </a>{" "}
-        in 2020 with{" "}
-        <a className="footer-link" href="https://reactjs.org">
-          React
-        </a>
-        . Background photo by
-        <a
-          className="footer-link"
-          href="https://unsplash.com/photos/RVX2STx44UI"
-        >
-          James Eades
-        </a>
-        .
-      </p>
-    </footer>
-  </div>
-);
+import text from "./text";
 
 function App() {
   const [keyword, setKeyword] = useState("");
   const [page, setPage] = useState(1);
   const [input, setInput] = useState("");
+  const observer = useRef();
 
   const { loading, photoArr, hasMore } = usePhotoSearch(keyword, page);
 
-  const observer = useRef();
   const lastPhotoRef = useCallback(
     (node) => {
       if (loading) return;
@@ -68,15 +27,37 @@ function App() {
 
   function handleInput(e) {
     setInput(e.target.value);
-    setPage(1);
   }
 
   function handleSubmit(e) {
     e.preventDefault();
     if (e.value !== "") {
       setKeyword(input);
+      setPage(1);
     }
   }
+
+  const photos = photoArr.map((photo, index) => {
+    // if this is the last photo in the array, give it a ref
+    if (photoArr.length === index + 1) {
+      return (
+        <div ref={lastPhotoRef} className="thumb" key={photo.id}>
+          <a href={photo.links.html}>
+            <img className="photo" src={photo.urls.thumb} alt="" />
+          </a>
+        </div>
+      );
+      // every photo except the last in the array
+    } else {
+      return (
+        <div className="thumb" key={photo.id}>
+          <a href={photo.links.html}>
+            <img className="photo" src={photo.urls.thumb} alt="" />
+          </a>
+        </div>
+      );
+    }
+  });
 
   return (
     <div className="App">
@@ -99,27 +80,8 @@ function App() {
           <input id="search-button" type="submit" value="Search" />
         </form>
       </div>
-      {/* <div id="test">hello</div> */}
       <div id="content">
-        {photoArr.map((photo, index) => {
-          if (photoArr.length === index + 1) {
-            return (
-              <div className="thumb" key={photo.id}>
-                <a ref={lastPhotoRef} href={photo.links.html}>
-                  <img className="photo" src={photo.urls.thumb} alt="" />
-                </a>
-              </div>
-            );
-          } else {
-            return (
-              <div className="thumb" key={photo.id}>
-                <a href={photo.links.html}>
-                  <img className="photo" src={photo.urls.thumb} alt="" />
-                </a>
-              </div>
-            );
-          }
-        })}
+        {photos}
         {loading && "Loading..."}
       </div>
     </div>
@@ -128,4 +90,4 @@ function App() {
 
 export default App;
 
-// start with: npm run dev
+// run with: npm run dev
