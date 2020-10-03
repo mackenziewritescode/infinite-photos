@@ -4,7 +4,7 @@ You can check it out [here](http://sunkenworld.com/infinite-photos/).
 
 This app was written as an exercise in two areas: on the back-end side to practice communicating with servers to fetch images using Node.js, Express.js and axios, and on the front-end using React hooks to create an infinite-scrolling component for the fetched images. Here's a little breakdown of the key components.
 
-Once we've set up a simple fetch request from the Unsplash servers, we set up a useEffect method in the function `usePhotoSearch` that receives two pieces of state from the main `App` component: the `keyword` that the user searched for, and the `page` number, which is another parameter of the Unsplash API which defines a group of images related to the keyword. In `server.js`, we defined the length of the page to be 30 items. We use axios to make the GET request and return the data to an array, `photoArr`:
+Once we've set up a simple fetch request from the Unsplash servers, we create a useEffect method in the function `usePhotoSearch` that receives two pieces of state from the main `App` component: the `keyword` that the user searched for, and the `page` number, which is another parameter of the Unsplash API which defines a group of images related to the keyword. In `server.js`, we defined the length of the page to be 30 items. We use axios to make the GET request and return the data to an array, `photoArr`:
 
 ```
 useEffect(() => {
