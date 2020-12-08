@@ -3,6 +3,7 @@ const config = require("universal-config");
 const Unsplash = require("unsplash-js").default;
 const toJson = require("unsplash-js").toJson;
 const express = require("express");
+const path = require('path');
 
 const unsplash = new Unsplash({
   accessKey: config.get("APP_ACCESS_KEY"),
@@ -18,6 +19,13 @@ app.get("/api/photos", (req, res) => {
     .then(toJson)
     .then((json) => res.json(json));
 });
+
+app.use(express.static(path.join(__dirname, 'client', 'build')));
+
+app.get("/", (req, res) => {
+    res.sendFile(path.join(__dirname + '/client/build/index.html'));
+});
+
 
 const PORT = process.env.PORT || 5000;
 
