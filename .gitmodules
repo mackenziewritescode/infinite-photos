@@ -1,3 +1,0 @@
-[submodule "client/photo-search-source"]
-	path = client/src
-	url = https://github.com/mackenziewritescode/photo-search-source.git
