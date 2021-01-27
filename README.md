@@ -1,6 +1,18 @@
 # Infinite Scrolling Photos with Unsplash API
 
-You can check it out [here](https://sunkenworld.com/infinite-photos).
+You can check it out [here](https://sunkenworld.com/infinite-photos). 
+
+If you want to run it locally: clone the repository, run `npm install` then create the file `./config/server.js`. You need to get Unsplash API access keys by signing up at (https://unsplash.com/developers). Once you do that, in `./config/server.js`, copy and paste the following and insert your own access and secret keys:
+
+```
+module.exports = {
+  APP_ACCESS_KEY:
+    process.env.APP_ACCESS_KEY || "<YOUR ACCESS KEY HERE>",
+  SECRET: process.env.SECRET || "<YOUR SECRET KEY HERE>",
+  CALLBACK_ID: process.env.CALLBACK_ID || "http://localhost:3000",
+};
+
+```
 
 This app was written as an exercise in two areas: on the back-end side to practice communicating with servers to fetch images using Node.js, Express.js and axios, and on the front-end using React hooks to create an infinite-scrolling component for the fetched images. Here's a little breakdown of the key components.
 
