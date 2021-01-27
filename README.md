@@ -11,7 +11,6 @@ module.exports = {
   SECRET: process.env.SECRET || "<YOUR SECRET KEY HERE>",
   CALLBACK_ID: process.env.CALLBACK_ID || "http://localhost:3000",
 };
-
 ```
 ***
 This app was written as an exercise in two areas: on the back-end side to practice communicating with servers to fetch images using Node.js, Express.js and axios, and on the front-end using React hooks to create an infinite-scrolling component for the fetched images. Here's a little breakdown of the key components.
