@@ -1,6 +1,6 @@
 # Infinite Scrolling Photos with Unsplash API
 
-This app is a personal project exploring infinite scrolling and APIs. It is a simple website where you enter a search term and related images are displayed. More images load as you scroll.
+This app is a personal project exploring infinite scrolling and APIs. It is a simple website where you enter a search term and related images are returned. More images load as you scroll.
 
 You can check it out [here](https://sunkenworld.com/infinite-photos). 
 
