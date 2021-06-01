@@ -1,5 +1,7 @@
 # Infinite Scrolling Photos with Unsplash API
 
+This app is a personal project exploring infinite scrolling and APIs. It is a simple website where you enter a search term and related images are displayed. More images load as you scroll.
+
 You can check it out [here](https://sunkenworld.com/infinite-photos). 
 
 If you want to run it locally: clone the repository, run `npm install` then create the file `./config/server.js`. You need to get Unsplash API access keys by signing up at https://unsplash.com/developers. Once you do that, in `./config/server.js`, copy and paste the following and insert your own access and secret keys:
